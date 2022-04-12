@@ -1,6 +1,7 @@
 """Greeting Flask app."""
 
 from random import choice
+import re
 
 from flask import Flask, request
 
@@ -17,9 +18,14 @@ AWESOMENESS = [
 @app.route('/')
 def start_here():
     """Home page."""
-
-    return "<!doctype html><html>Hi! This is the home page.</html>"
-
+#add a link instead 
+    return """
+      <!doctype html>
+      <html>Hi! This is the home page. 
+        <a href="/hello">Go to hello</a>
+ 
+    </html>
+    """
 
 @app.route('/hello')
 def say_hello():
@@ -35,6 +41,14 @@ def say_hello():
         <h1>Hi There!</h1>
         <form action="/greet">
           What's your name? <input type="text" name="person">
+          <label for="compliment"> What's your compliment? </label>
+             <select name = "compliment_choices"> 
+              <option value="smart">Smart</option> 
+              <option value="nice">Nice</option> 
+              <option value="rich">Rich</option> 
+              <option value="pretty">Pretty</option> 
+              <option value="perfect">Perfect</option> 
+            </select>
           <input type="submit" value="Submit">
         </form>
       </body>
@@ -47,8 +61,9 @@ def greet_person():
     """Get user by name."""
 
     player = request.args.get("person")
+    compliment = request.args.get("compliment_choices")
 
-    compliment = choice(AWESOMENESS)
+    # compliment = choice(AWESOMENESS)
 
     return f"""
     <!doctype html>
